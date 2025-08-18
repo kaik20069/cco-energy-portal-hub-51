@@ -70,7 +70,7 @@ export const AdminReportsTable = ({
                 </Button>
                 <Button
                   size="sm"
-                  className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                  variant="secondary"
                   onClick={() => onDownload(report.file_url)}
                 >
                   <FileDown className="w-4 h-4 mr-1" />

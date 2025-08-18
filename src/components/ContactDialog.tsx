@@ -90,7 +90,7 @@ export const ContactDialog = ({ open, onOpenChange, selectedUser, senderName }: 
           <Button 
             onClick={handleSend} 
             disabled={!message.trim() || isSending}
-            className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+            variant="secondary"
           >
             {isSending ? "Enviando..." : "Enviar Mensagem"}
           </Button>

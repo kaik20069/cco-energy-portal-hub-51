@@ -327,7 +327,7 @@ const Dashboard = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
-                <FileText className="w-5 h-5 mr-2 text-[#ADD8E6]" />
+                <FileText className="w-5 h-5 mr-2 text-secondary" />
                 Relatórios
               </CardTitle>
               <CardDescription>
@@ -344,7 +344,8 @@ const Dashboard = () => {
               </p>
               <Button 
                 onClick={() => navigate("/dashboard/reports")}
-                className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black w-full"
+                variant="secondary"
+                className="w-full"
               >
                 Ver Relatórios
               </Button>
@@ -354,7 +355,7 @@ const Dashboard = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Receipt className="w-5 h-5 mr-2 text-[#ADD8E6]" />
+                <Receipt className="w-5 h-5 mr-2 text-secondary" />
                 Boletos
               </CardTitle>
               <CardDescription>
@@ -371,7 +372,8 @@ const Dashboard = () => {
               </p>
               <Button 
                 onClick={() => navigate("/dashboard/boletos")}
-                className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black w-full"
+                variant="secondary"
+                className="w-full"
               >
                 Ver Boletos
               </Button>
@@ -382,10 +384,10 @@ const Dashboard = () => {
             <>
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Users className="w-5 h-5 mr-2 text-[#ADD8E6]" />
-                    Usuários
-                  </CardTitle>
+              <CardTitle className="flex items-center">
+                <Users className="w-5 h-5 mr-2 text-secondary" />
+                Usuários
+              </CardTitle>
                   <CardDescription>
                     Gerencie os usuários do sistema
                   </CardDescription>
@@ -396,7 +398,8 @@ const Dashboard = () => {
                   </p>
                   <Button 
                     onClick={() => navigate("/dashboard/users")}
-                    className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black w-full"
+                    variant="secondary"
+                    className="w-full"
                   >
                     Gerenciar Usuários
                   </Button>
@@ -405,10 +408,10 @@ const Dashboard = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Users className="w-5 h-5 mr-2 text-[#ADD8E6]" />
-                    Clientes
-                  </CardTitle>
+              <CardTitle className="flex items-center">
+                <Users className="w-5 h-5 mr-2 text-secondary" />
+                Clientes
+              </CardTitle>
                   <CardDescription>
                     Gerencie os clientes e seus documentos
                   </CardDescription>
@@ -419,7 +422,8 @@ const Dashboard = () => {
                   </p>
                   <Button 
                     onClick={() => navigate("/dashboard/clients")}
-                    className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black w-full"
+                    variant="secondary"
+                    className="w-full"
                   >
                     Gerenciar Clientes
                   </Button>
@@ -428,10 +432,10 @@ const Dashboard = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Upload className="w-5 h-5 mr-2 text-[#ADD8E6]" />
-                    Upload
-                  </CardTitle>
+              <CardTitle className="flex items-center">
+                <Upload className="w-5 h-5 mr-2 text-secondary" />
+                Upload
+              </CardTitle>
                   <CardDescription>
                     Faça upload de documentos
                   </CardDescription>
@@ -442,7 +446,8 @@ const Dashboard = () => {
                   </p>
                   <Button 
                     onClick={() => navigate("/dashboard/upload")}
-                    className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black w-full"
+                    variant="secondary"
+                    className="w-full"
                   >
                     Enviar Documentos
                   </Button>

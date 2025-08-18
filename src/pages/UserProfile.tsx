@@ -190,7 +190,7 @@ const UserProfile = () => {
                   <Button
                     type="submit"
                     disabled={isUpdating}
-                    className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                    variant="secondary"
                   >
                     {isUpdating ? (
                       <>
@@ -276,7 +276,7 @@ const UserProfile = () => {
                   <Button
                     type="submit"
                     disabled={isChangingPassword}
-                    className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                    variant="secondary"
                   >
                     {isChangingPassword ? (
                       <>

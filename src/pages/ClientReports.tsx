@@ -163,7 +163,7 @@ const ClientReports = () => {
                           </Button>
                           <Button
                             size="sm"
-                            className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                            variant="secondary"
                             onClick={() => handleDownload(report.file_url)}
                           >
                             <FileDown className="w-4 h-4 mr-1" />

@@ -326,7 +326,7 @@ const AdminUsers = () => {
             </div>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black">
+                <Button variant="secondary">
                   <UserPlus className="w-4 h-4 mr-2" />
                   Novo Cliente
                 </Button>
@@ -395,7 +395,7 @@ const AdminUsers = () => {
                       </Button>
                       <Button
                         type="submit"
-                        className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                        variant="secondary"
                         disabled={isCreatingUser}
                       >
                         {isCreatingUser ? "Criando..." : "Criar Conta"}
@@ -567,7 +567,7 @@ const AdminUsers = () => {
                   </DialogClose>
                   <Button
                     type="submit"
-                    className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                    variant="secondary"
                     disabled={isUpdatingUser}
                   >
                     {isUpdatingUser ? "Atualizando..." : "Salvar Alterações"}

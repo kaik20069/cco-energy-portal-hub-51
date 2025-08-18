@@ -353,7 +353,7 @@ const AdminClients = () => {
                         <li
                           key={client.id}
                           className={`p-3 cursor-pointer border-b last:border-b-0 transition-colors
-                            ${selectedClient?.id === client.id ? 'bg-[#ADD8E6]/20' : 'hover:bg-gray-50'}`}
+                            ${selectedClient?.id === client.id ? 'bg-secondary/20' : 'hover:bg-gray-50'}`}
                           onClick={() => handleClientSelect(client)}
                         >
                           <div className="font-medium">{client.full_name || "Cliente sem nome"}</div>
@@ -374,7 +374,7 @@ const AdminClients = () => {
                   <CardHeader>
                     <div className="flex justify-between items-center">
                       <CardTitle>Detalhes do Cliente: {selectedClient.full_name}</CardTitle>
-                      <Button onClick={handleAddDocument} className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black">
+                      <Button onClick={handleAddDocument} variant="secondary">
                         Adicionar Documento
                       </Button>
                     </div>
@@ -438,7 +438,7 @@ const AdminClients = () => {
                                       </Button>
                                       <Button
                                         size="sm"
-                                        className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                                        variant="secondary"
                                         onClick={() => handleDownload(boleto.file_url)}
                                       >
                                         <FileDown className="w-4 h-4 mr-1" />
@@ -506,7 +506,7 @@ const AdminClients = () => {
                                       </Button>
                                       <Button
                                         size="sm"
-                                        className="bg-[#ADD8E6] hover:bg-[#9CC8D6] text-black"
+                                        variant="secondary"
                                         onClick={() => handleDownload(report.file_url)}
                                       >
                                         <FileDown className="w-4 h-4 mr-1" />
