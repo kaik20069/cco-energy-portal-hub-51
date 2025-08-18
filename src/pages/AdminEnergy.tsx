@@ -15,10 +15,10 @@ import { getUniqueDistribuidoras, getUniqueFornecedoras, processEnergyData, gene
 import { Download, Plus, FileUp } from "lucide-react";
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip as RechartsTooltip, Legend, BarChart, Bar } from "recharts";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import AdminEnergyForm from "@/components/energy/AdminEnergyForm";
 import { useSearchParams } from "react-router-dom";
 import ClientSearch from "@/components/energy/ClientSearch";
-import AddEnergyDialog from "@/components/energy/AddEnergyDialog";
+import EnergyMonthForm from "@/components/energy/EnergyMonthForm";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import ImportEnergyCSV from "@/components/energy/ImportEnergyCSV";
 import EnergyKpis from "@/components/energy/EnergyKpis";
 import EnergyMonthlyTable from "@/components/energy/EnergyMonthlyTable";
@@ -465,22 +465,33 @@ export default function AdminEnergy() {
                 {content}
               </TabsContent>
               <TabsContent value="cadastro">
-                <AdminEnergyForm initialUserId={selectedUser} onUserChange={setSelectedUser} />
+                <EnergyMonthForm 
+                  initialUserId={selectedUser} 
+                  onUserChange={setSelectedUser}
+                  onSuccess={loadData}
+                />
               </TabsContent>
             </Tabs>
 
-            {/* Dialogs */}
-            <AddEnergyDialog
-              open={addDialogOpen}
-              onOpenChange={setAddDialogOpen}
-              selectedUserId={selectedUser}
-              editingRecord={editingRecord}
-              onSuccess={() => {
-                loadData();
-                setAddDialogOpen(false);
-                setEditingRecord(null);
-              }}
-            />
+            {/* Dialog for adding month */}
+            <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>
+                    {editingRecord ? "Editar registro" : "Adicionar mês"}
+                  </DialogTitle>
+                </DialogHeader>
+                <EnergyMonthForm
+                  initialUserId={selectedUser}
+                  editingRecord={editingRecord}
+                  onSuccess={() => {
+                    loadData();
+                    setAddDialogOpen(false);
+                    setEditingRecord(null);
+                  }}
+                />
+              </DialogContent>
+            </Dialog>
 
             {importDialogOpen && (
               <ImportEnergyCSV
