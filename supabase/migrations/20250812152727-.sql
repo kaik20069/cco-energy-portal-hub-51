@@ -1,0 +1,20 @@
+-- Add new numeric fields with default 0 to energy_monthly_metrics
+ALTER TABLE public.energy_monthly_metrics
+  ADD COLUMN IF NOT EXISTS energia_kwh_ponta numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS energia_kwh_fora numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS energia_kwh_reservado numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kwh_ponta numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kwh_fora numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kwh_reservado numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS demanda_kw_ponta numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS demanda_kw_fora numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS demanda_kw_reservado numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kw_ponta numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kw_fora numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kw_reservado numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS reativo_kvarh_ponta numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS reativo_kvarh_fora numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS reativo_kvarh_reservado numeric(14,3) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kvarh_ponta numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kvarh_fora numeric(14,6) DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS preco_kvarh_reservado numeric(14,6) DEFAULT 0;
