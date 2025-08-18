@@ -14,6 +14,8 @@ import UnidadeSelector from "./UnidadeSelector";
 import DistribuidoraSelector from "./DistribuidoraSelector";
 import FornecedoraSelector from "./FornecedoraSelector";
 import UnitsManagement from "./UnitsManagement";
+import EnergyMonthForm from "./EnergyMonthForm";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Papa from "papaparse";
 
 interface EnergyRow {
@@ -68,6 +70,7 @@ const ClientEnergySection: React.FC<ClientEnergySectionProps> = () => {
   const [selectedDistribuidora, setSelectedDistribuidora] = useState<string>("todas");
   const [selectedFornecedora, setSelectedFornecedora] = useState<string>("todas");
   const [showUnitsManagement, setShowUnitsManagement] = useState(false);
+  const [showAddEnergyModal, setShowAddEnergyModal] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<string>("");
 
   useEffect(() => {
@@ -252,6 +255,13 @@ const ClientEnergySection: React.FC<ClientEnergySectionProps> = () => {
             {/* Botões de ação */}
             <div className="col-span-full flex flex-wrap items-end justify-end gap-2">
               <Button
+                variant="secondary"
+                onClick={() => setShowAddEnergyModal(true)}
+                disabled={!currentUserId}
+              >
+                Adicionar Mês
+              </Button>
+              <Button
                 variant="outline"
                 onClick={() => setShowUnitsManagement(true)}
                 disabled={!currentUserId}
@@ -301,6 +311,24 @@ const ClientEnergySection: React.FC<ClientEnergySectionProps> = () => {
         </>
       )}
       
+      <Dialog open={showAddEnergyModal} onOpenChange={setShowAddEnergyModal}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Adicionar Mês de Energia</DialogTitle>
+          </DialogHeader>
+          <EnergyMonthForm
+            initialUserId={currentUserId}
+            showDuplicateToggle={true}
+            showClientSearch={false}
+            showUnitsManagement={true}
+            onSuccess={() => {
+              setShowAddEnergyModal(false);
+              fetchData();
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+
       <UnitsManagement
         userId={currentUserId}
         open={showUnitsManagement}
