@@ -21,9 +21,9 @@ interface EnergyRow {
   compra_energia_rs?: number | null;
   icms_energia_rs?: number | null;
   encargos_rs?: number | null;
-  banco_trianon_rs?: number | null;
   gestao_cco_rs?: number | null;
   gestao_parceiro_rs?: number | null;
+  fatura_livre_rs?: number | null;
   [k: string]: any;
 }
 
@@ -82,9 +82,9 @@ const EnergyCharts: React.FC<EnergyChartsProps> = ({ data }) => {
           compra_energia_rs: Number(r.compra_energia_rs || 0),
           icms_energia_rs: Number(r.icms_energia_rs || 0),
           encargos_rs: Number(r.encargos_rs || 0),
-          banco_trianon_rs: Number(r.banco_trianon_rs || 0),
           gestao_cco_rs: Number(r.gestao_cco_rs || 0),
           gestao_parceiro_rs: Number(r.gestao_parceiro_rs || 0),
+          fatura_livre_rs: Number(r.fatura_livre_rs || 0),
           // Reativo
           total_kvarh,
           limite_kvarh,
@@ -218,50 +218,87 @@ const EnergyCharts: React.FC<EnergyChartsProps> = ({ data }) => {
           <CardTitle className="text-base">Custos (R$)</CardTitle>
         </CardHeader>
         <CardContent className="h-64">
-          {chartData.every(d => 
-            (d.compra_energia_rs + d.icms_energia_rs + d.encargos_rs + 
-             d.banco_trianon_rs + d.gestao_cco_rs + d.gestao_parceiro_rs) === 0
-          ) ? (
-            <div className="h-full flex items-center justify-center text-sm text-muted-foreground">
-              Sem dados de custos
-            </div>
-          ) : (
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="reference_label" fontSize={12} />
-                <YAxis fontSize={12} />
-                <RechartsTooltip 
-                  content={({ active, payload, label }) => {
-                    if (active && payload && payload.length) {
-                      const total = payload.reduce((sum, item) => sum + Number(item.value || 0), 0);
-                      return (
-                        <div className="bg-background border rounded-md p-2 shadow-sm">
-                          <p className="font-medium">{`Mês: ${label}`}</p>
-                          {payload.map((item, index) => (
-                            <p key={index} style={{ color: item.color }}>
-                              {`${item.name}: ${Number(item.value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
+          {(() => {
+            // Check which series have data
+            const hasCompra = chartData.some(d => d.compra_energia_rs > 0);
+            const hasIcms = chartData.some(d => d.icms_energia_rs > 0);
+            const hasEncargos = chartData.some(d => d.encargos_rs > 0);
+            const hasGestaoCco = chartData.some(d => d.gestao_cco_rs > 0);
+            const hasGestaoParceiro = chartData.some(d => d.gestao_parceiro_rs > 0);
+            const hasFaturaLivre = chartData.some(d => d.fatura_livre_rs > 0);
+
+            const hasAnyCost = hasCompra || hasIcms || hasEncargos || hasGestaoCco || hasGestaoParceiro || hasFaturaLivre;
+
+            if (!hasAnyCost) {
+              return (
+                <div className="h-full flex items-center justify-center text-sm text-muted-foreground">
+                  Sem dados de custos
+                </div>
+              );
+            }
+
+            return (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart 
+                  data={chartData}
+                  barCategoryGap="30%"
+                  barGap={2}
+                >
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis 
+                    dataKey="reference_label" 
+                    type="category" 
+                    scale="band"
+                    fontSize={12} 
+                  />
+                  <YAxis fontSize={12} />
+                  <RechartsTooltip 
+                    content={({ active, payload, label }) => {
+                      if (active && payload && payload.length) {
+                        const validPayload = payload.filter(item => Number(item.value || 0) > 0);
+                        if (validPayload.length === 0) return null;
+                        
+                        const total = validPayload.reduce((sum, item) => sum + Number(item.value || 0), 0);
+                        return (
+                          <div className="bg-background border rounded-md p-2 shadow-sm">
+                            <p className="font-medium">{`Mês: ${label}`}</p>
+                            {validPayload.map((item, index) => (
+                              <p key={index} style={{ color: item.color }}>
+                                {`${item.name}: ${Number(item.value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
+                              </p>
+                            ))}
+                            <p className="font-medium border-t pt-1 mt-1">
+                              {`Total do mês: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
                             </p>
-                          ))}
-                          <p className="font-medium border-t pt-1 mt-1">
-                            {`Total do mês: ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`}
-                          </p>
-                        </div>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                <Legend />
-                <Bar dataKey="compra_energia_rs" name="Compra Energia" fill={COLORS.compra} radius={[6, 6, 0, 0]} />
-                <Bar dataKey="icms_energia_rs" name="ICMS" fill={COLORS.icms} radius={[6, 6, 0, 0]} />
-                <Bar dataKey="encargos_rs" name="Encargos" fill={COLORS.encargos} radius={[6, 6, 0, 0]} />
-                <Bar dataKey="banco_trianon_rs" name="Banco Trianon" fill={COLORS.banco} radius={[6, 6, 0, 0]} />
-                <Bar dataKey="gestao_cco_rs" name="Gestão CCO" fill={COLORS.gestao_cco} radius={[6, 6, 0, 0]} />
-                <Bar dataKey="gestao_parceiro_rs" name="Gestão Parceiro" fill={COLORS.gestao_parceiro} radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          )}
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  <Legend />
+                  {hasCompra && (
+                    <Bar dataKey="compra_energia_rs" name="Compra Energia" fill={COLORS.compra} radius={[6, 6, 0, 0]} />
+                  )}
+                  {hasIcms && (
+                    <Bar dataKey="icms_energia_rs" name="ICMS" fill={COLORS.icms} radius={[6, 6, 0, 0]} />
+                  )}
+                  {hasEncargos && (
+                    <Bar dataKey="encargos_rs" name="Encargos" fill={COLORS.encargos} radius={[6, 6, 0, 0]} />
+                  )}
+                  {hasGestaoCco && (
+                    <Bar dataKey="gestao_cco_rs" name="Gestão CCO" fill={COLORS.gestao_cco} radius={[6, 6, 0, 0]} />
+                  )}
+                  {hasGestaoParceiro && (
+                    <Bar dataKey="gestao_parceiro_rs" name="Gestão Parceiro" fill={COLORS.gestao_parceiro} radius={[6, 6, 0, 0]} />
+                  )}
+                  {hasFaturaLivre && (
+                    <Bar dataKey="fatura_livre_rs" name="Fatura Livre" fill="#065F46" radius={[6, 6, 0, 0]} />
+                  )}
+                </BarChart>
+              </ResponsiveContainer>
+            );
+          })()}
         </CardContent>
       </Card>
     </div>
